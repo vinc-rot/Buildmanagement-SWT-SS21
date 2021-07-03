@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="Softwaretechnik-Buildmanagement" default="run">
+
+    <target name="clean">
+        <delete dir="build"/>
+        <delete dir="help"/>
+    </target>
+
+    <target name="get">
+        <get src="https://ant.apache.org/" dest="help/index.html"/>
+    </target>
+
+    <target name="compile">
+        <javac includeantruntime="false" srcdir="./src" destdir="build/classes">
+        </javac>
+    </target>
+
+    <target name="jar">
+        <mkdir dir="build/jar"/>
+        <jar destfile="build/jar/hello.jar" basedir="build/classes">
+            <manifest>
+                <attribute name="Main-Class" value="Buildmanagement"/>
+            </manifest>
+        </jar>
+    </target>
+
+    <junit printsummary="yes" fork="yes" haltonfailure="yes">
+        <formatter type="plain"/>
+        <test name="Buildmanagement"/>
+    </junit>
+
+    <target name="run" depends="compile">
+        <java classname = "Buildmanagement">
+            <classpath path="test">
+            </classpath>
+        </java>
+    </target>
+
+    <target name="doc">
+        <javadoc packagenames="Buildmanagement" sourcepath="src" destdir="test">
+        </javadoc>
+    </target>
+</project>
